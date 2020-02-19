@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React focused test answer</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .test {
+            width: 100px;
+            background: lightblue;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/babel">
+
+    let divHeight;
+    window.setDivHeight = (height) => divHeight = height;
+
+    const higherOrderComponent = (WrappedComponent) => {
+        const MainComponent = () => {
+            const [divHeight, setDivHeight ] = React.useState(window.setDivHeight(1000))
+            return(
+                <WrappedComponent divHeight={divHeight}/>
+            )
+        }
+        return MainComponent;
+    };
+
+    class App extends React.Component {
+        state = {
+            windowWidth: window.innerWidth,
+            divHeight: this.props.divHeight
+        };
+
+        componentDidMount() {
+            console.log(this.props);
+            window.addEventListener('resize', this.setWindowWidth);
+        }
+
+        setWindowWidth = () => {
+            this.setState({windowWidth: window.innerWidth});
+        };
+
+        setDivHeight = e => {
+            this.setState({divHeight: e.target.value});
+        };
+
+        render() {
+            return (
+                <div>
+                    <span>{this.state.windowWidth}</span>
+
+                    <div style={{marginTop: '20px'}}>
+                        <input type="number" value={this.state.divHeight} onChange={e => this.setDivHeight(e)}/>
+                        <div className="test" style={{height: this.state.divHeight + 'px'}}></div>
+                    </div>
+
+                </div>
+            )
+        }
+    }
+
+    const MainComponent = higherOrderComponent(App);
+
+    ReactDOM.render(<MainComponent/>, document.getElementById('root'))
+
+
+</script>
+</body>
+</html>

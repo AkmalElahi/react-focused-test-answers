@@ -1,0 +1,145 @@
+1. What is your favourite new javascript feature and why?
+
+Ans: I like all new features of ES6, like promises , arrow functions and destructuring, but my favourite feature is async/await. 
+It makes it easier to handle asynchronous calls and make code managable.
+
+2. Explain an interesting way in which you have used this javascript feature.
+
+ANS: It saves you get into callback hell, I used it always where I have to make asynchronous requests like in APIs etc.
+
+3. Is there any difference between regular function syntax and the shorter arrow function syntax? (Write the answer in your own words).
+
+Ans: Yes regular function has function keyword followed by function name in the begining, 
+where arrow function has only parenthese, arrow and "function body loke () => {}". In arrow functions you don't need 
+to bind this for your scope it manages it by going one level up until it doesn't find it. 
+
+
+4. What is the difference between ‘myFunctionCall(++foo)’   and  ‘myFunctionCall(foo++)’
+
+Ans: myFunctionCall(++foo) in this case function will get the incremented value of foo,
+     myFunctionCall(foo++) this will first pass the value to the function and then increment it.
+
+5. In your own words, explain what a javascript ‘class’ is and how it differs from a function.
+
+Ans: Js class is template or blueprint for an entity or object and can have methods to access class properties/state 
+through its instences or by extend it, where as function is just a block of code that can be used anytime when you call it. 
+
+
+6. In your own words, explain css specificity.
+
+Ans: Css specificity is a sort of hierarchy which specifies the precedence of conflicting style on same element, 
+like if we have a back-ground property on same tag as inline and in css class the browser will run give the 
+precedence to the back-ground that this defined in inline css.
+
+7. In your own words, explain, what is ‘!important’ in css.  Also how does it work?  
+Are there any special circumstances when using it, where it’s behaviour might not be what you expect?
+
+Ans: !!important has the highest precedence in css specificity. It overrides all css values for the particular style property.
+I use it when I want to override the bootstrtap style property :D .it may couse some problem where you want to change that property else where on same element
+in future and you don't remember you have used !important on it.
+
+8. What is your prefered layout system: inline-block, floating + clearing, flex, grid, other?  And why?
+
+Ans: I prefer grid as it works in 2D and give more flexibility to style elements.
+
+9. Are negative margins legal and what do they do (margin: -20px)?
+
+Ans: Yes, negative margins are legal. marginL -20px reduce size by 20px of each side.
+
+10. If a <div/> has no margin or other styling and a <p/> tag inside of it has a margin top of some kind, the margin from the 
+<p/> tag will show up on the div instead (the margin will show above the div not inside of it), why is this?  What are the different 
+things that can be done to prevent it?
+
+Ans: Its because of collapsing margins as both are block elements.
+    we can change the display of p element to inline-block.
+
+11. What technologies do you use to unit test your react components?
+
+Ans: I use Mocha and jest.
+
+12. Are there any pitfalls associated with this technology that have caused you difficulty in the past?
+
+Ans: I haven't faced any issue with jest or mocha yet but it is recomended to use a combination of testing solutions to build a 
+robust React application.
+
+13. How do you test in your unit tests to see if the correct properties are being passed to child components.
+
+Ans: I compare the types of default props and the pass props pf the component.
+
+############################# Please find solution of questions from 14 to 16 in attetched index.html file #############################
+
+
+17. What are the differences between Subject, BehaviorSubject and ReplaySubject?  
+And in what situation would you use each of these (please provide example scenarios)?
+
+Ans: Subject doesnt have initial value and doesnt preserve state,
+BehaviorSubject has initial value and preserve last value, When it is subscribed it emits the value immediate
+ReplaySubject is as BehaviorSubject but it can preserve multiple values.
+
+EXAMPLES:
+
+const subject = new Rx.Subject();
+subject.next(1);
+subject.subscribe(x => console.log(x));
+
+BehaviourSubject
+var subject = new Rx.BehaviorSubject(0);  // 0 is the initial value
+
+subject.subscribe({
+  next: (v) => console.log('observerA: ' + v)  // output initial value, then new values on `next` triggers
+});
+
+subject.next(1);  // output new value 1 for 'observer A'
+subject.next(2);  // output new value 2 for 'observer A', current value 2 for 'Observer B' on subscription
+
+subject.subscribe({
+  next: (v) => console.log('observerB: ' + v)  // output current value 2, then new values on `next` triggers
+});
+
+subject.next(3);
+
+OUTPUT: 
+observerA: 0
+observerA: 1
+observerA: 2
+observerB: 2
+observerA: 3
+observerB: 3
+
+18. If you have an array of values in a stream and you wish to pipe it such that it will emit the arrays values individually, 
+one by one and wait for them all to be completed before processing another array, how would you do this?  Please provide a code example.
+
+Ans:
+In this scenario we can use forkJoin operator
+
+forkJoin(
+  {
+    google: array1,
+    microsoft: array2,
+    users: array3
+  }
+)
+  .subscribe(observer);
+
+19. If you have a stream that receives individual values and would like to pipe it such that it builds an array out of these values, 
+emitting the updated array each time a new value is added to it, how would you do this?  Please provide a code example.
+
+Ans: 
+In this scenario we can use merge operator
+
+const first = interval(2500);
+const second = interval(2000);
+const third = interval(1500);
+const fourth = interval(1000);
+
+//emit outputs from one observable
+const example = merge(
+  first.pipe(mapTo('FIRST!')),
+  second.pipe(mapTo('SECOND!')),
+  third.pipe(mapTo('THIRD')),
+  fourth.pipe(mapTo('FOURTH'))
+);
+const subscribe = example.subscribe(val => console.log(val));
+
+20: Explain which of the Twilio Api’s you have used.  Also explain how and in what scenarios you have used them.
+Ans: I have used Twilio Node.js API for SMS 
